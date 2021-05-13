@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Button, View} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
+import 'react-native-get-random-values';
 import Principal from './pages/principal';
 
 function HomeScreen({navigation}) {
