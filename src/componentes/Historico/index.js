@@ -1,30 +1,45 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import HistoricoItens from './HistoricoItens';
 import Colors from '../../styles/Colors';
 import {v4 as uuidv4} from 'uuid';
+import {setHistory, getHistoryFull, delHistoryFull} from '../../Banco/RealmDB';
 
 const Historico = () => {
-  const DATA = [
-    {id: 1, link: 'http://google.com'},
-    {id: 2, link: 'itau.com/1321321321-3213212132132-321318542135416-321321321-.html'},
-    {id: 3, link: 'juba.com'},
-    {id: 4, link: `${uuidv4()}`},
-  ];
-
-  let apĺicarCorDeFundo = true;
+  // const DATA = [
+  //   {id: 1, link: 'http://google.com'},
+  //   {id: 2, link: 'itau.com/1321321321-3213212132132-321318542135416-321321321-.html'},
+  //   {id: 3, link: 'juba.com'},
+  //   {id: 4, link: `${uuidv4()}`},
+  // ];
+  const [DATA, setDATA] = useState()
+  const [refreshFlatlist, setrefreshFlatlist] = useState(false)
+  
+  useEffect(() => {
+    const loadHistory = async () => {
+      const data = await getHistoryFull();
+      setDATA(data);
+    }
+    loadHistory();
+  }, [] )
 
   return (
     <View style={styles.container}>
       <View style={styles.cabecalho}>
         <Text style={styles.title}>Histórico</Text>
-        <TouchableOpacity style={styles.btClearAll}>
+        <TouchableOpacity style={styles.btClearAll} onPress={ async () => {
+          await delHistoryFull()
+          setrefreshFlatlist(true);
+          alert('Seu histórico foi deletado com sucesso');
+          setrefreshFlatlist(false);
+        }}>
           <Icon name="trash" size={35} color={Colors.red} />
         </TouchableOpacity>
       </View>
       <FlatList
         data={DATA}
+        refreshing= {refreshFlatlist}
         renderItem={({item}) => (
           <HistoricoItens item={item} bgColorLink="#fffccc" />
         )}

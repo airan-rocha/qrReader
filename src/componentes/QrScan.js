@@ -42,7 +42,7 @@ const QrScan = ({onPressButton, navigation}) => {
     setMiraQrCode(require('../imagens/miraqrok.png'));
     console.log(alert(e.data));
     setMiraQrCode(require('../imagens/miraqr.png'));
-    setHistory(e.data, 'link');
+    await setHistory(e.data, 'link');
     onPressButton();
     // Linking.openURL(e.data).catch(err =>
     //   console.error('An error occured', err),

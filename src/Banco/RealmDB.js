@@ -12,7 +12,7 @@ const HistorySchema = {
   primaryKey: 'id',
 };
 
-const realm = async () => {
+const getRealm = async () => {
   return await Realm.open({
     path: 'qrreader',
     schema: [HistorySchema],
@@ -20,19 +20,43 @@ const realm = async () => {
   });
 };
 
-export const setHistory = (item, type) => {
-  realm.write(() => {
-    realm.create('qrreader', {
-      id: uuidv4(),
-      info: item,
-      type: type,
-      date: Date(),
+export const setHistory = async (item, type) => {
+  const realm = await getRealm();
+  try {
+    realm.write(() => {
+      realm.create('History', {
+        id: uuidv4(),
+        info: item,
+        type: type,
+        date: Date(),
+      });
     });
-  });
+  } catch (error) {
+    console.error(error);
+  }
+  
 };
 
-export const getHistoryFull = () => {
-  const history = realm.objects('History');
-  console.log(history);
-  return history;
+export const getHistoryFull = async () => {
+  const realm = await getRealm();
+  try {
+    const history = realm.objects('History');
+    console.log(history);
+    return history;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+export const delHistoryFull = async () => {
+  const realm = await getRealm();
+  try {
+    realm.write(() => {
+      realm.delete(realm.objects("History"));
+      console.log('histórico deletado com sucesso');
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };

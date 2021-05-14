@@ -6,7 +6,7 @@ const HistoricoItens = ({item, bgColorLink}) => {
     <View style={styles.container}>
       <TouchableOpacity style={[styles.link, {backgroundColor: bgColorLink}]}>
         <Text numberOfLines={1} style={styles.linkContent}>
-          {item.link}
+          {item.info}
         </Text>
       </TouchableOpacity>
     </View>
