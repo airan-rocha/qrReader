@@ -3,43 +3,57 @@ import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import HistoricoItens from './HistoricoItens';
 import Colors from '../../styles/Colors';
-import {v4 as uuidv4} from 'uuid';
-import {setHistory, getHistoryFull, delHistoryFull} from '../../Banco/RealmDB';
+import {getHistoryFull, delHistoryFull} from '../../Banco/RealmDB';
+import ConfirmDialog from '../ConfirmDialog';
 
 const Historico = () => {
-  // const DATA = [
-  //   {id: 1, link: 'http://google.com'},
-  //   {id: 2, link: 'itau.com/1321321321-3213212132132-321318542135416-321321321-.html'},
-  //   {id: 3, link: 'juba.com'},
-  //   {id: 4, link: `${uuidv4()}`},
-  // ];
-  const [DATA, setDATA] = useState()
-  const [refreshFlatlist, setrefreshFlatlist] = useState(false)
-  
+  const [DATA, setDATA] = useState();
+  const [refreshFlatlist, setrefreshFlatlist] = useState(false);
+  const [confirmDialogView, setConfirmDialogView] = useState(false);
+
   useEffect(() => {
     const loadHistory = async () => {
       const data = await getHistoryFull();
       setDATA(data);
-    }
+    };
     loadHistory();
-  }, [] )
+  }, []);
+
+  const refreshHistory = () => {
+    setrefreshFlatlist(true);
+    // após atualizar a lista, o refreshFlatlist volta ao seu valor inicial.
+    setrefreshFlatlist(false);
+  };
+
+  const limparHistorico = async () => {
+    await delHistoryFull();
+    refreshHistory();
+    setConfirmDialogView(false);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.cabecalho}>
         <Text style={styles.title}>Histórico</Text>
-        <TouchableOpacity style={styles.btClearAll} onPress={ async () => {
-          await delHistoryFull()
-          setrefreshFlatlist(true);
-          alert('Seu histórico foi deletado com sucesso');
-          setrefreshFlatlist(false);
-        }}>
+        <TouchableOpacity
+          style={styles.btClearAll}
+          onPress={() => setConfirmDialogView(true)}>
           <Icon name="trash" size={35} color={Colors.red} />
         </TouchableOpacity>
       </View>
+
+      {confirmDialogView && (
+        <ConfirmDialog
+          mensagem={'Limpeza do Histórico!\nEssa ação não poderá ser desfeita!'}
+          confirmPress={() => limparHistorico()}
+          cancelPress={() => setConfirmDialogView(false)}
+          bgStyle={{top: -247}}
+        />
+      )}
+
       <FlatList
         data={DATA}
-        refreshing= {refreshFlatlist}
+        refreshing={refreshFlatlist}
         renderItem={({item}) => (
           <HistoricoItens item={item} bgColorLink="#fffccc" />
         )}
@@ -74,6 +88,5 @@ const styles = StyleSheet.create({
   },
   btClearAll: {
     paddingLeft: 40,
-    // backgroundColor: '#ff0',
   },
 });
