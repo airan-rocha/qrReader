@@ -4,6 +4,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import 'react-native-get-random-values';
 import Principal from './pages/principal';
+import TextReader from './pages/textReader';
 
 function HomeScreen({navigation}) {
   return (
@@ -32,6 +33,7 @@ export default function App() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={Principal} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="TextReader" component={TextReader} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

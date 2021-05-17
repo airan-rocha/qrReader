@@ -34,7 +34,6 @@ export const setHistory = async (item, type) => {
   } catch (error) {
     console.error(error);
   }
-  
 };
 
 export const getHistoryFull = async () => {
@@ -47,7 +46,6 @@ export const getHistoryFull = async () => {
     console.error(error);
   }
 };
-
 
 export const delHistoryFull = async () => {
   const realm = await getRealm();

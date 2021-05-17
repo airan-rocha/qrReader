@@ -6,7 +6,7 @@ import Colors from '../../styles/Colors';
 import {getHistoryFull, delHistoryFull} from '../../Banco/RealmDB';
 import ConfirmDialog from '../ConfirmDialog';
 
-const Historico = () => {
+const Historico = ({navigation}) => {
   const [DATA, setDATA] = useState();
   const [refreshFlatlist, setrefreshFlatlist] = useState(false);
   const [confirmDialogView, setConfirmDialogView] = useState(false);
@@ -55,7 +55,11 @@ const Historico = () => {
         data={DATA}
         refreshing={refreshFlatlist}
         renderItem={({item}) => (
-          <HistoricoItens item={item} bgColorLink="#fffccc" />
+          <HistoricoItens
+            item={item}
+            bgColorLink="#fffccc"
+            navigation={navigation}
+          />
         )}
         keyExtractor={item => item.id}
       />

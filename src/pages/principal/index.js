@@ -35,7 +35,7 @@ const Principal = ({navigation}) => {
           <Text>To QR Scan</Text>
         </TouchableOpacity>
       </View>
-      <Historico />
+      <Historico navigation={navigation} />
       {/* Tela do Scanner */}
       {scanView && (
         <View style={styles.containerQrScan}>

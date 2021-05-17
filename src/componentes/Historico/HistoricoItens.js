@@ -1,11 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-const HistoricoItens = ({item, bgColorLink}) => {
+const HistoricoItens = ({navigation, item, bgColorLink}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={[styles.link, {backgroundColor: bgColorLink}]}>
-        <Text numberOfLines={1} style={styles.linkContent}>
+      <TouchableOpacity
+        style={[styles.link, {backgroundColor: bgColorLink}]}
+        onPress={() =>
+          navigation.navigate('TextReader', {dataText: item.info})
+        }>
+        <Text numberOfLines={1} style={styles.itemContent}>
           {item.info}
         </Text>
       </TouchableOpacity>
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     paddingVertical: 5,
   },
-  linkContent: {
+  itemContent: {
     fontSize: 16,
   },
 });

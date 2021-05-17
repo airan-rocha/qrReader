@@ -40,13 +40,17 @@ const QrScan = ({onPressButton, navigation}) => {
 
   const onSuccess = async e => {
     setMiraQrCode(require('../imagens/miraqrok.png'));
-    console.log(alert(e.data));
-    setMiraQrCode(require('../imagens/miraqr.png'));
-    await setHistory(e.data, 'link');
+
+    if (e.data.includes('http://') || e.data.includes('https://')) {
+      await setHistory(e.data, 'link');
+      Linking.openURL(e.data).catch(err =>
+        console.error('An error occured', err),
+      );
+    } else {
+      await setHistory(e.data, 'text');
+    }
+
     onPressButton();
-    // Linking.openURL(e.data).catch(err =>
-    //   console.error('An error occured', err),
-    // );
   };
 
   return (
