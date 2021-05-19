@@ -35,11 +35,15 @@ const Principal = ({navigation}) => {
           <Text>To QR Scan</Text>
         </TouchableOpacity>
       </View>
+      {/* Histórico */}
       <Historico navigation={navigation} />
       {/* Tela do Scanner */}
       {scanView && (
         <View style={styles.containerQrScan}>
-          <QrScan onPressButton={() => setScanView(false)} />
+          <QrScan
+            onPressButton={() => setScanView(false)}
+            navigation={navigation}
+          />
         </View>
       )}
     </View>

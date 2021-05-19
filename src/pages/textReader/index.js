@@ -7,21 +7,29 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Icon from 'react-native-vector-icons/dist/Feather';
 import Colors from '../../styles/Colors';
 
 const TextReader = ({route, navigation}) => {
   const {dataText} = route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Simple Text - qrReader</Text>
-      <View style={styles.textArea}>
-        <Text style={styles.text}>{dataText}</Text>
+      <View style={styles.cabecalho}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name="arrow-left" size={30} color={Colors.black} />
+        </TouchableOpacity>
+        <Text style={styles.title}>Simple Text - qrReader</Text>
       </View>
-      <TouchableOpacity
-        style={styles.btCopyToClipboard}
-        onPress={() => Clipboard.setString(dataText)}>
-        <Text>Copiar para Área de Tranferência</Text>
-      </TouchableOpacity>
+      <View style={styles.textArea}>
+        <TextInput style={styles.text} value={dataText} multiline={true} />
+        <View style={styles.containerBt}>
+          <TouchableOpacity
+            style={styles.btCopyToClipboard}
+            onPress={() => Clipboard.setString(dataText)}>
+            <Icon name="copy" size={30} color={Colors.white} />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -33,7 +41,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  cabecalho: {
+    flexDirection: 'row',
+  },
   title: {
+    flex: 1,
     fontSize: 20,
     textAlign: 'center',
   },
@@ -43,8 +55,29 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    color: '#000',
+    flex: 1,
+    textAlignVertical: 'top',
+    color: Colors.black,
     fontSize: 17,
   },
-  btCopyToClipboard: {},
+  containerBt: {
+    alignItems: 'flex-end',
+  },
+  btCopyToClipboard: {
+    width: 60,
+    height: 60,
+    backgroundColor: Colors.turquese,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: Colors.black,
+    marginBottom: 15,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
 });

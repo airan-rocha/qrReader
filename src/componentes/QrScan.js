@@ -48,6 +48,7 @@ const QrScan = ({onPressButton, navigation}) => {
       );
     } else {
       await setHistory(e.data, 'text');
+      navigation.navigate('TextReader', {dataText: e.data});
     }
 
     onPressButton();

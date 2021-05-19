@@ -1,14 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Linking} from 'react-native';
 
 const HistoricoItens = ({navigation, item, bgColorLink}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.link, {backgroundColor: bgColorLink}]}
-        onPress={() =>
-          navigation.navigate('TextReader', {dataText: item.info})
-        }>
+        onPress={async () => {
+          if (item.type === 'link') {
+            await Linking.openURL(item.info).catch(e => console.error(e));
+          } else {
+            navigation.navigate('TextReader', {dataText: item.info});
+          }
+        }}>
         <Text numberOfLines={1} style={styles.itemContent}>
           {item.info}
         </Text>
