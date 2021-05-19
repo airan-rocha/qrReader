@@ -30,7 +30,7 @@ const Principal = ({navigation}) => {
           <Text>Press Here</Text>
           <Image
             style={styles.imgBtScanner}
-            source={require('../../imagens/miraqr.png')}
+            source={require('../../imagens/frame.png')}
           />
           <Text>To QR Scan</Text>
         </TouchableOpacity>

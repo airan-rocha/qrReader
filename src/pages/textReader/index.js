@@ -21,7 +21,12 @@ const TextReader = ({route, navigation}) => {
         <Text style={styles.title}>Simple Text - qrReader</Text>
       </View>
       <View style={styles.textArea}>
-        <TextInput style={styles.text} value={dataText} multiline={true} />
+        <TextInput
+          style={styles.text}
+          value={dataText}
+          multiline={true}
+          editable={true}
+        />
         <View style={styles.containerBt}>
           <TouchableOpacity
             style={styles.btCopyToClipboard}
