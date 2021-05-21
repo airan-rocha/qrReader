@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Icon from 'react-native-vector-icons/dist/Feather';
@@ -15,18 +16,21 @@ const TextReader = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.cabecalho}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={30} color={Colors.black} />
         </TouchableOpacity>
         <Text style={styles.title}>Simple Text - qrReader</Text>
       </View>
       <View style={styles.textArea}>
-        <TextInput
+        {/* <TextInput
           style={styles.text}
           value={dataText}
           multiline={true}
           editable={true}
-        />
+        /> */}
+        <ScrollView>
+          <Text style={styles.text}>{dataText}</Text>
+        </ScrollView>
         <View style={styles.containerBt}>
           <TouchableOpacity
             style={styles.btCopyToClipboard}
